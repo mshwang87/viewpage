@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Date;
 
 @Entity
-@Table(name="Roomview_table")
-public class Roomview {
+@Table(name="Carview_table")
+public class Carview {
 
         @Id
         @GeneratedValue(strategy=GenerationType.AUTO)

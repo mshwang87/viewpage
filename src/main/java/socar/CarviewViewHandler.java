@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RoomviewViewHandler {
+public class CarviewViewHandler {
 
 
     @Autowired
-    private RoomviewRepository roomviewRepository;
+    private CarviewRepository carviewRepository;
 
     @StreamListener(KafkaProcessor.INPUT)
     public void whenCarRegistered_then_CREATE_1 (@Payload CarRegistered carRegistered) {
@@ -24,14 +24,14 @@ public class RoomviewViewHandler {
             if (!carRegistered.validate()) return;
 
             // view 객체 생성
-            Roomview roomview = new Roomview();
+            Carview carview = new Carview();
             // view 객체에 이벤트의 Value 를 set 함
-            roomview.setId(carRegistered.getRoomId());
-            roomview.setDesc(carRegistered.getDesc());
-            roomview.setReviewCnt(carRegistered.getReviewCnt());
-            roomview.setRoomStatus(carRegistered.getStatus());
+            carview.setId(carRegistered.getRoomId());
+            carview.setDesc(carRegistered.getDesc());
+            carview.setReviewCnt(carRegistered.getReviewCnt());
+            carview.setRoomStatus(carRegistered.getStatus());
             // view 레파지 토리에 save
-            roomviewRepository.save(roomview);
+            carviewRepository.save(carview);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -44,16 +44,16 @@ public class RoomviewViewHandler {
         try {
             if (!carModified.validate()) return;
                 // view 객체 조회
-            Optional<Roomview> roomviewOptional = roomviewRepository.findById(carModified.getRoomId());
+            Optional<Carview> carviewOptional = carviewRepository.findById(carModified.getRoomId());
 
-            if( roomviewOptional.isPresent()) {
-                 Roomview roomview = roomviewOptional.get();
+            if( carviewOptional.isPresent()) {
+                 Carview carview = carviewOptional.get();
             // view 객체에 이벤트의 eventDirectValue 를 set 함
-                 roomview.setDesc(carModified.getDesc());
-                 roomview.setReviewCnt(carModified.getReviewCnt());
-                 roomview.setRoomStatus(carModified.getStatus());
+                 carview.setDesc(carModified.getDesc());
+                 carview.setReviewCnt(carModified.getReviewCnt());
+                 carview.setRoomStatus(carModified.getStatus());
                 // view 레파지 토리에 save
-                 roomviewRepository.save(roomview);
+                 carviewRepository.save(carview);
                 }
 
 
@@ -66,15 +66,15 @@ public class RoomviewViewHandler {
         try {
             if (!reservationConfirmed.validate()) return;
                 // view 객체 조회
-            Optional<Roomview> roomviewOptional = roomviewRepository.findById(reservationConfirmed.getRoomId());
+            Optional<Carview> carviewOptional = carviewRepository.findById(reservationConfirmed.getRoomId());
 
-            if( roomviewOptional.isPresent()) {
-                 Roomview roomview = roomviewOptional.get();
+            if( carviewOptional.isPresent()) {
+                 Carview carview = carviewOptional.get();
             // view 객체에 이벤트의 eventDirectValue 를 set 함
-                 roomview.setRsvId(reservationConfirmed.getRsvId());
-                 roomview.setRsvStatus(reservationConfirmed.getStatus());
+                 carview.setRsvId(reservationConfirmed.getRsvId());
+                 carview.setRsvStatus(reservationConfirmed.getStatus());
                 // view 레파지 토리에 save
-                 roomviewRepository.save(roomview);
+                 carviewRepository.save(carview);
                 }
 
 
@@ -88,13 +88,13 @@ public class RoomviewViewHandler {
             if (!paymentApproved.validate()) return;
                 // view 객체 조회
 
-                    List<Roomview> roomviewList = roomviewRepository.findByRsvId(paymentApproved.getRsvId());
-                    for(Roomview roomview : roomviewList){
+                    List<Carview> carviewList = carviewRepository.findByRsvId(paymentApproved.getRsvId());
+                    for(Carview carview : carviewList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    roomview.setPayId(paymentApproved.getPayId());
-                    roomview.setPayStatus(paymentApproved.getStatus());
+                    carview.setPayId(paymentApproved.getPayId());
+                    carview.setPayStatus(paymentApproved.getStatus());
                 // view 레파지 토리에 save
-                roomviewRepository.save(roomview);
+                carviewRepository.save(carview);
                 }
 
         }catch (Exception e){
@@ -107,12 +107,12 @@ public class RoomviewViewHandler {
             if (!reservationCancelled.validate()) return;
                 // view 객체 조회
 
-                    List<Roomview> roomviewList = roomviewRepository.findByRsvId(reservationCancelled.getRsvId());
-                    for(Roomview roomview : roomviewList){
+                    List<Carview> carviewList = carviewRepository.findByRsvId(reservationCancelled.getRsvId());
+                    for(Carview carview : carviewList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    roomview.setRsvStatus(reservationCancelled.getStatus());
+                    carview.setRsvStatus(reservationCancelled.getStatus());
                 // view 레파지 토리에 save
-                roomviewRepository.save(roomview);
+                carviewRepository.save(carview);
                 }
 
         }catch (Exception e){
@@ -125,12 +125,12 @@ public class RoomviewViewHandler {
             if (!paymentCancelled.validate()) return;
                 // view 객체 조회
 
-                    List<Roomview> roomviewList = roomviewRepository.findByPayId(paymentCancelled.getPayId());
-                    for(Roomview roomview : roomviewList){
+                    List<Carview> carviewList = carviewRepository.findByPayId(paymentCancelled.getPayId());
+                    for(Carview carview : carviewList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    roomview.setPayStatus(paymentCancelled.getStatus());
+                    carview.setPayStatus(paymentCancelled.getStatus());
                 // view 레파지 토리에 save
-                roomviewRepository.save(roomview);
+                carviewRepository.save(carview);
                 }
 
         }catch (Exception e){
@@ -143,7 +143,7 @@ public class RoomviewViewHandler {
         try {
             if (!carDeleted.validate()) return;
             // view 레파지 토리에 삭제 쿼리
-            roomviewRepository.deleteById(carDeleted.getRoomId());
+            carviewRepository.deleteById(carDeleted.getRoomId());
         }catch (Exception e){
             e.printStackTrace();
         }
