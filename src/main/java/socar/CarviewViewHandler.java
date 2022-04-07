@@ -26,10 +26,10 @@ public class CarviewViewHandler {
             // view 객체 생성
             Carview carview = new Carview();
             // view 객체에 이벤트의 Value 를 set 함
-            carview.setId(carRegistered.getRoomId());
-            carview.setDesc(carRegistered.getDesc());
-            carview.setReviewCnt(carRegistered.getReviewCnt());
-            carview.setRoomStatus(carRegistered.getStatus());
+            carview.setcarId(carRegistered.getcarId());
+            carview.setcarStatus(carRegistered.getstatus());
+            carview.setcarName(carRegistered.getcarName());
+            carview.setcarType(carRegistered.getcarType());
             // view 레파지 토리에 save
             carviewRepository.save(carview);
 
@@ -44,14 +44,14 @@ public class CarviewViewHandler {
         try {
             if (!carModified.validate()) return;
                 // view 객체 조회
-            Optional<Carview> carviewOptional = carviewRepository.findById(carModified.getRoomId());
+            Optional<Carview> carviewOptional = carviewRepository.findBycarId(carModified.getcarId());
 
             if( carviewOptional.isPresent()) {
                  Carview carview = carviewOptional.get();
             // view 객체에 이벤트의 eventDirectValue 를 set 함
-                 carview.setDesc(carModified.getDesc());
-                 carview.setReviewCnt(carModified.getReviewCnt());
-                 carview.setRoomStatus(carModified.getStatus());
+                 carview.setcarStatus(carModified.getstatus());
+                 carview.setcarName(carModified.getcarName());
+                 carview.setcarType(carModified.getcarType());
                 // view 레파지 토리에 save
                  carviewRepository.save(carview);
                 }
@@ -66,7 +66,7 @@ public class CarviewViewHandler {
         try {
             if (!reservationConfirmed.validate()) return;
                 // view 객체 조회
-            Optional<Carview> carviewOptional = carviewRepository.findById(reservationConfirmed.getRoomId());
+            Optional<Carview> carviewOptional = carviewRepository.findBycarId(reservationConfirmed.getcarId());
 
             if( carviewOptional.isPresent()) {
                  Carview carview = carviewOptional.get();
@@ -143,7 +143,7 @@ public class CarviewViewHandler {
         try {
             if (!carDeleted.validate()) return;
             // view 레파지 토리에 삭제 쿼리
-            carviewRepository.deleteById(carDeleted.getRoomId());
+            carviewRepository.deleteById(carDeleted.getcarId());
         }catch (Exception e){
             e.printStackTrace();
         }
