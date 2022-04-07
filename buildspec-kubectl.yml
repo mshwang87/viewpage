@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    _PROJECT_NAME: "socar-viewpage"
+    _PROJECT_NAME: "user06-viewpage"
 
 phases:
   install:
