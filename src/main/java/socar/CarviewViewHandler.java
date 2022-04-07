@@ -17,6 +17,7 @@ public class CarviewViewHandler {
     @Autowired
     private CarviewRepository carviewRepository;
 
+    // 차량이 등록되었을 때 insert -> viewpage table 
     @StreamListener(KafkaProcessor.INPUT)
     public void whenCarRegistered_then_CREATE_1 (@Payload CarRegistered carRegistered) {
         try {
@@ -39,6 +40,7 @@ public class CarviewViewHandler {
     }
 
 
+    // 차량이 수정되었을 때 update -> viewpage table 
     @StreamListener(KafkaProcessor.INPUT)
     public void whenCarModified_then_UPDATE_1(@Payload CarModified carModified) {
         try {
@@ -61,6 +63,8 @@ public class CarviewViewHandler {
             e.printStackTrace();
         }
     }
+    
+    // 예약이 확정되었을 때 update -> viewpage table 
     @StreamListener(KafkaProcessor.INPUT)
     public void whenReservationConfirmed_then_UPDATE_2(@Payload ReservationConfirmed reservationConfirmed) {
         try {
@@ -82,6 +86,8 @@ public class CarviewViewHandler {
             e.printStackTrace();
         }
     }
+    
+    // 결제가 완료 되었을 때 update -> viewpage table 
     @StreamListener(KafkaProcessor.INPUT)
     public void whenPaymentApproved_then_UPDATE_3(@Payload PaymentApproved paymentApproved) {
         try {
@@ -101,6 +107,8 @@ public class CarviewViewHandler {
             e.printStackTrace();
         }
     }
+    
+    // 예약이 취소 되었을 때 update -> viewpage table
     @StreamListener(KafkaProcessor.INPUT)
     public void whenReservationCancelled_then_UPDATE_4(@Payload ReservationCancelled reservationCancelled) {
         try {
@@ -119,6 +127,8 @@ public class CarviewViewHandler {
             e.printStackTrace();
         }
     }
+    
+    // 결제가 취소 되었을 때 update -> viewpage table
     @StreamListener(KafkaProcessor.INPUT)
     public void whenPaymentCancelled_then_UPDATE_5(@Payload PaymentCancelled paymentCancelled) {
         try {
@@ -138,6 +148,7 @@ public class CarviewViewHandler {
         }
     }
 
+    // 차량정보를 삭제 하였을 때  delete -> viewpage table
     @StreamListener(KafkaProcessor.INPUT)
     public void whenCarDeleted_then_DELETE_1(@Payload CarDeleted carDeleted) {
         try {
