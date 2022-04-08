@@ -50,13 +50,13 @@ public class CarviewViewHandler {
 
             if( carviewOptional.isPresent()) {
                  Carview carview = carviewOptional.get();
-            // view 객체에 이벤트의 eventDirectValue 를 set 함
+                // view 객체에 이벤트의 eventDirectValue 를 set 함
                  carview.setCarStatus(carModified.getstatus());
                  carview.setCarName(carModified.getcarName());
                  carview.setCarType(carModified.getcarType());
                 // view 레파지 토리에 save
                  carviewRepository.save(carview);
-                }
+            }
 
 
         }catch (Exception e){
@@ -74,7 +74,7 @@ public class CarviewViewHandler {
 
             if( carviewOptional.isPresent()) {
                  Carview carview = carviewOptional.get();
-            // view 객체에 이벤트의 eventDirectValue 를 set 함
+                // view 객체에 이벤트의 eventDirectValue 를 set 함
                  carview.setRsvId(reservationConfirmed.getrsvId());
                  carview.setRsvStatus(reservationConfirmed.getstatus());
                 // view 레파지 토리에 save
@@ -115,12 +115,12 @@ public class CarviewViewHandler {
             if (!reservationCancelled.validate()) return;
                 // view 객체 조회
 
-                    List<Carview> carviewList = carviewRepository.findByRsvId(reservationCancelled.getrsvId());
-                    for(Carview carview : carviewList){
+                List<Carview> carviewList = carviewRepository.findByRsvId(reservationCancelled.getrsvId());
+                for(Carview carview : carviewList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     carview.setRsvStatus(reservationCancelled.getstatus());
-                // view 레파지 토리에 save
-                carviewRepository.save(carview);
+                    // view 레파지 토리에 save
+                    carviewRepository.save(carview);
                 }
 
         }catch (Exception e){
